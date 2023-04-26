@@ -1,0 +1,10 @@
+#### On this repository you can find:
+
+1. The pdf of the internship report (Stage_Report.pdf)
+#
+2. A little resume of what I did during the internship (Internship_resume.txt)
+#
+3. Examples of the codes I wrote, including:
+     - the driver with all the modules I used (Driver_LongTransient_Python_release8.py)
+     - the short version of the candidates collection (freq band [295 - 300]Hz - Matched_Filtering_short2.py)
+     - the (long) script with the fit of the output candidates (freq band [295 - 300]Hz - Results_fit2.py)
