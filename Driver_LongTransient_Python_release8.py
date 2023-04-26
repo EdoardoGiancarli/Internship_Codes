@@ -28,7 +28,7 @@ from astroML.plotting import setup_text_plots
 setup_text_plots(fontsize=12, usetex=True)
 
 
-# Driver with function for Matched Filtering
+######### Driver with function for Matched Filtering ##########
 #
 # mat_to_dict: converts matlab data file into dict (simpler to handle)
 #
