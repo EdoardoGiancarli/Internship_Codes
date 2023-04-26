@@ -1,0 +1,63 @@
+#### Internship resume #######################################
+
+## Intro
+In this work I present an updated and modified matched filtering method for reconstructing the frequency trend of a long transient gravitational wave signal emitted by a young neutron star. For the purpose of this I have run different simulations concerning the analysis of an injected long transient signal into a sample of real data from LIGO Livingston.
+For these simulations I have chosen two different models for the injected signal frequency: a power law frequency and an exponential one.
+The two chosen data samples, which represents the interferometer's noise, contain the data output of LIGO-L in the frequency bands [107-108] Hz and [295-300] Hz during the O3 observing run.
+The simulation has been implemented by using a new set of codes in Python written specifically for this work and based on SNAG, a Matlab object oriented toolbox for data simulation and analysis of signal and noises for gravitational antennas.
+From the whole simulation I have obtained a frequency reconstruction in agreement with the chosen models for both the frequency trends.
+
+
+## Simulation
+
+(1) Loading the data (both interferometer output data representing the noise and signal) and injecting the signal in the noise with the function get_data()
+
+(2) Generating the Gaussian templates database with the function TFunc_gauss_DB()
+
+(3) Performing the matched filtering using the total data and the Gaussian templates with the function filter_data_chunk()
+
+(4) Extracting the output candidates (defined as those templates which have a CR* over a chosen threshold) with the function get_candidates()
+
+(5) Fitting of the output candidates to test the accuracy of the reconstruction
+    - outliers removal
+    - fit
+    - study of the residuals between the output candidates, the fitted model and the true model
+
+
+*CR: The critical ratio (CR) is a measure of the probability that an output candidate has a certain false alarm probability
+
+
+## Python functions (see driver "Driver_LongTransient_Python_release8")
+
+1. Driver with function for Matched Filtering
+
+2. mat_to_dict: converts matlab data file into dict (simpler to handle)
+
+3. freq_powlaw, freq_exp: frequency signals
+
+4. signal_freq: define the long transient frequency
+
+5. TFunc_gauss_DB: it builds the Gaussian templates database
+
+6. get_data: gets the data from gout, gsinj and source (e.g. for filter_data_chunk)
+
+7. CR: computes the Critical Ratio (for sel_candidates)
+
+8. sel_candidates: gives the candidates for each data chunk
+
+9. filter_data_chunk: performs the Matched Filtering using the database and the data from gout, gsinj and source
+
+10. get_candidates: It selects the output candidates from the total candidates list based on the chosen threshold.
+
+11. Matched_Filtering: quick method to obtain candidates (for now)
+
+12. display_templates: displays the templates of the selected candidates
+
+13. display_candidates: displays the selected candidates
+
+14. residue_plot: displays the selected residues
+
+15. coeffs_errors: computes the standard errors of the fit regression coefficients
+
+16. candidates_remover: it removes certain candidates from the input dataframe in a rectangular area [x1, x2] x [y1, y2]
+
