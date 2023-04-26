@@ -82,7 +82,7 @@ def mat_to_dict(path, key = 'goutL', mat_v73 = False):  # convert the data from 
     return:
         
     data_dict: (dict) dict from MATLAB data file ---
-    perczero: (float) perc of total zero data in y (data from the Obs run)
+    perczero: (float) percentage of total zero data in y (data from the Obs run)
     -----------------------------------------------------------------------------------------------------------------     
     """
     
