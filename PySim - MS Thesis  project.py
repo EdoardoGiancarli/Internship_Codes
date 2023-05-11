@@ -36,7 +36,7 @@ from skyfield.api import load                   # ephemeris
 #
 # GW_signal (class)
 #
-# GW_injection (class)
+# GW_injection (class) # ongoing
 
 
 ####    codes    #####
@@ -89,7 +89,7 @@ def extract_bsdgoutinfo(bsd_gout, key= 'gout_58633_58638_295_300', mat_v73=True)
             't0_gout': t0_gout, 'v_eq': v_eq, 'p_eq': p_eq,
             'info': ant + '_' + cal + notes}
     
-    return gout   # !!! forse anche tfstr (in cont)
+    return gout  
 
 
 
@@ -128,10 +128,10 @@ def parameters(days, dx, fgw0, tcoe = 0, n = 5, k = 1.2167e-16, tau = None, Phi0
     NS_parameters (list): this list contains the fiducial values of the ellipticity (default = 1e-6), moment of
                           inertia (default = 1e38 [kg m**2]) and distance (default = 1 [kpc]) of a 1.4M_sun
                           neutron star (these fiducial values set the constant of the h0(t) strain amplitude) --
-    h0factor (float): multiplying factor for h0 to reduce the strain amplitude h(t) values (for computational costs,
+    h0factor (float): multiplying factor for h0 to enlarge the strain amplitude h(t) values (for computational costs,
                       default = 1e23) --
-    signal_inj (bool): if you want to inject the simulated signal into some interf noise, the data about the interf are
-                       also loaded (check the interferometer input, default = False) --
+    signal_inj (bool): if you want to inject the simulated signal into some interf noise, the data about the interferometer
+                       are also loaded (check the interferometer input, default = False) --
     bsd_gout (str, dict): bsd_gout containing the interferometer's data (if the path to bsd_gout is inserted, then
                           the MATLAB data file will be converted with extract_bsdgoutinfo (PySim), default = None) --
     key : (str) keyword with info from L, H or V interferometer (default = 'gout_58633_58638_295_300') --
@@ -489,7 +489,7 @@ class GW_signal:
         return 1
     
     
-    def Phi(self, plot = False):   # !!! inserire Einstein delay (here or in a method inside the class)
+    def Phi(self, plot = False):   # !!! insert Einstein delay
         """
         Phase of the GW signal (Phi(t) [rad], from frequency integration).
         --------------------------------
@@ -548,7 +548,7 @@ class GW_signal:
         GW strain amplitude after eta introduction.
         """
     
-        if self.eta == 0:       # no need to compute iota
+        if self.eta == 0:
             c = 0
         elif self.eta > 0:
             c = -1./self.eta + np.sqrt(1./self.eta**2 - 1)
@@ -556,10 +556,7 @@ class GW_signal:
             c = 1./np.abs(self.eta) - np.sqrt(1./self.eta**2 - 1)
         
         amp0 = self.h0()
-        
-        # i = self.iota()
-        # return amp0*np.sqrt((1 + 6*(np.cos(i))**2 + np.cos(i)**4)/4.)
-        
+       
         return amp0*np.sqrt((1 + 6*c**2 + c**4)/4.)
     
     
@@ -765,10 +762,9 @@ class GW_signal:
         elif objects == 'data':  # makes the data dataframe
             df = pd.DataFrame([self.frequency(), self.Phi(), self.A_plus(),
                                self.A_cross(), self.h_t().real, self.h_t().imag]).transpose()
-            
             df.columns = ['frequency', 'phase', 'A_plus', 'A_cross', 'h_real', 'h_imag']
         
-        elif objects == 'parameters':  # makes the parameters dataframe
+        elif objects == 'parameters':  #!!! makes the parameters dataframe
             df = pd.DataFrame.from_dict(vars(self))
         
         else:
@@ -791,14 +787,3 @@ class GW_signal:
 
 #############################################################################################################################
 
-
-
-
-
-#### class: simulated long transient GW injection into interferometer noise
-
-## class variables from bsd_gout (to call them: GW_signal)
-
-# gout = parameters['bsd_gout']                # dict containing the interferometer's data and info
-# dx = gout['dx']                              # sampling time [s] (ricordarsi di mutare quello in parameters)
-# freq_band
